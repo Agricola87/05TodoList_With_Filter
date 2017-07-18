@@ -4,18 +4,20 @@
   <h3>{ opts.title }</h3>
 
   <ul>
-    <li each={ items.filter(whatShow) }>
+    <li each={ itemsToShow}>
       <label class={ completed: done }>
         <input type="checkbox" checked={ done } onclick={ parent.toggle }> { title }
       </label>
     </li>
   </ul>
 
+  <hr>
+
   <form onsubmit={ add }>
     <input ref="input" onkeyup={ edit }>
-    <button disabled={ !text }>Add #{ items.filter(whatShow).length + 1 }</button>
+    <button disabled={ !text }>Add #{ itemsToShow.length + 1 }</button>
 
-    <button type="button" disabled={ items.filter(onlyDone).length == 0 } onclick={ removeAllDone }>
+    <button type="button" disabled={ itemsToShow.length == 0 } onclick={ removeAllDone }>
     X{ items.filter(onlyDone).length } </button>
   </form>
   
@@ -35,6 +37,8 @@
   <!-- this script tag is optional -->
   <script>
     this.items = opts.items
+    opts.itemsToShow = opts.items
+    this.itemsToShow = opts.itemsToShow
 
     edit(e) {
       this.text = e.target.value
@@ -43,6 +47,7 @@
     add(e) {
       if (this.text) {
         this.items.push({ title: this.text })
+        //this.itemsToShow.push({ title: this.text })
         this.text = this.refs.input.value = ''
       }
       e.preventDefault()
@@ -52,22 +57,6 @@
       this.items = this.items.filter(function(item) {
         return !item.done
       })
-    }
-
-    // an two example how to filter items on the list
-    whatShow(item) {
-	  if(opts.showMode == 'all')
-	  {
-	    return !item.hidden
-	  }
-	  if(opts.showMode == 'onlyDone')
-	  {
-	    return (!item.hidden) && (item.done)
-	  }
-	  if(opts.showMode == 'onlyUndone')
-	  {
-	    return (!item.hidden) && (!item.done)
-	  }
     }
 
     onlyDone(item) {
@@ -82,16 +71,25 @@
 	
 	showAll(e) {
 	  opts.showMode = 'all'
+    this.itemsToShow = this.items.filter(function(item) {
+        return true
+      })
 	  e.preventDefault()
 	}
 	
 	showOnlyDone(e) {
-	  opts.showMode = 'onlyDone'
+	  opts.showMode = 'onlyDone';
+    this.itemsToShow = this.items.filter(function(item) {
+        return item.done
+      })
 	  e.preventDefault()
 	}
 	
 	showOnlyUndone(e) {
 	  opts.showMode = 'onlyUndone'
+    this.itemsToShow = this.items.filter(function(item) {
+        return !item.done
+      })
 	  e.preventDefault()
 	}
 	

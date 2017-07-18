@@ -23,13 +23,13 @@
   
 <hr>
 
-<button disabled={ opts.showMode == 'all' } 
+<button disabled={  this.showMode == 'all' } 
   onclick={ showAll }>
   Show all</button>
-<button type="button" disabled={ opts.showMode == 'onlyDone' } 
+<button type="button" disabled={  this.showMode == 'onlyDone' } 
   onclick={ showOnlyDone }>
 	Show done</button>
-<button type="button" disabled={ opts.showMode == 'onlyUndone' } 
+<button type="button" disabled={ this.showMode == 'onlyUndone' } 
   onclick={ showOnlyUndone }>
 	Show undone</button>
   
@@ -37,8 +37,8 @@
   <!-- this script tag is optional -->
   <script>
     this.items = opts.items
-    opts.itemsToShow = opts.items
-    this.itemsToShow = opts.itemsToShow
+    this.itemsToShow = this.items
+    this.showMode = opts.showMode
 
     edit(e) {
       this.text = e.target.value
@@ -47,7 +47,6 @@
     add(e) {
       if (this.text) {
         this.items.push({ title: this.text })
-        //this.itemsToShow.push({ title: this.text })
         this.text = this.refs.input.value = ''
       }
       e.preventDefault()
@@ -70,7 +69,7 @@
     }
 	
 	showAll(e) {
-	  opts.showMode = 'all'
+	  this.showMode = 'all'
     this.itemsToShow = this.items.filter(function(item) {
         return true
       })
@@ -78,7 +77,7 @@
 	}
 	
 	showOnlyDone(e) {
-	  opts.showMode = 'onlyDone';
+	  this.showMode = 'onlyDone';
     this.itemsToShow = this.items.filter(function(item) {
         return item.done
       })
@@ -86,7 +85,7 @@
 	}
 	
 	showOnlyUndone(e) {
-	  opts.showMode = 'onlyUndone'
+	  this.showMode = 'onlyUndone'
     this.itemsToShow = this.items.filter(function(item) {
         return !item.done
       })

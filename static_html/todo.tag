@@ -19,15 +19,17 @@
     X{ items.filter(onlyDone).length } </button>
   </form>
   
-  <hr>
-  
-   <form onsubmit={ showAll }>
-    <button disabled={ opts.showMode == 'all' }>Show all</button>
-    <button type="button" disabled={ opts.showMode == 'onlyDone' } onclick={ showOnlyDone }>
+<hr>
+
+<button disabled={ opts.showMode == 'all' } 
+  onclick={ showAll }>
+  Show all</button>
+<button type="button" disabled={ opts.showMode == 'onlyDone' } 
+  onclick={ showOnlyDone }>
 	Show done</button>
-	<button type="button" disabled={ opts.showMode == 'onlyUndone' } onclick={ showOnlyUndone }>
+<button type="button" disabled={ opts.showMode == 'onlyUndone' } 
+  onclick={ showOnlyUndone }>
 	Show undone</button>
-  </form>
   
 
   <!-- this script tag is optional -->
